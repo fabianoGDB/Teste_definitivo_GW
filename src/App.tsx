@@ -1,17 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import Crud from './components/Crud';
+import 'react-toastify/dist/ReactToastify.css';
+import './assets/styles/custom.scss';
+import './App.css';
+
+// import Routes from './Routes';
+import { useState } from 'react';
+import { AuthContext, AuthContextData } from './AuthContext';
+import { ToastContainer } from 'react-toastify';
+import Routes from './Routes';
 
 function App() {
+  const [authContextData, setAuthContextData] = useState<AuthContextData>({
+    authenticated: false,
+  });
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/crud" component={Crud} />
-      </Switch>
-    </Router>
+    <AuthContext.Provider value={{ authContextData, setAuthContextData }}>
+      <Routes />
+      <ToastContainer />
+    </AuthContext.Provider>
   );
 }
+
+export default App;
